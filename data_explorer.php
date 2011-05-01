@@ -79,7 +79,7 @@ class DataExplorer {
     //
 
     /**
-     *
+     * Gets the title of the spreadsheet from row1, collumn1
      * @return <type>
      */
     public function getTitle() {
@@ -88,7 +88,7 @@ class DataExplorer {
     }
 
     /**
-     *
+     * Gets the X axis Labels, which are present in the first row (from the 2nd collumn on)
      * @return <type>
      */
     public function getXAxisLabels() {

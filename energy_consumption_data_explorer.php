@@ -23,15 +23,16 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
      * @param <String> $title the title of the graphic (optional, if null it will get the title from the spreadsheet)
      * @param <Int> $chartType the type of graphic (by default its 2, i.e., a line graph)
      */
-    public function createChart($file_name, $title="", $yAxisTitle="", $chartType=2, $filterYData=null) {
+    public function createChart($file_name, $title="", $yAxisTitle="", $chartType=2, $YDataToUse=null) {
 
+        //gets the Y labels from the data
         $yAxis = $this->getYAxisLabels();
 
         /* Create and populate the pData object */
         $MyData = new pData();
 
         //adds the Y Data
-        $this->filterYData($MyData, $yAxis, $filterYData);
+        $this->filterYData($MyData, $yAxis, $YDataToUse);
 
         //defines the yAxis title (if it isn't passed in the method it uses the name of the default data)
         if($yAxisTitle == "")
@@ -42,6 +43,8 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
         $MyData->addPoints($this->getXAxisLabels(), "Years");
         $MyData->setSerieDescription("Years", "Years");
         $MyData->setAbscissa("Years");
+        //DEFINO O EIXO DOS XX COMO DATAS
+        //$MyData->setXAxisDisplay(AXIS_FORMAT_DATE);
 
         /* Create the pChart object */
         $myPicture = new pImage(900, 430, $MyData);
@@ -96,7 +99,7 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
         if (empty($filterData)) {
             $data->addPoints($this->getDataRow(2), $yLabels[2]);
             $data->addPoints($this->getDataRow(3), $yLabels[3]);
-            $data->addPoints($this->getDataRow(5), $yLabels[5]);
+            $data->addPoints($this->getDataRow(4), $yLabels[4]);
         } else {
             /*
              * Esta funcao serve para converter o array de strings para inteiros
@@ -109,7 +112,7 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
             );
             //adds the chosen data to the graphic
             for ($i = 0; $i < count($array); $i++) {
-                //echo "array[$i] = " . $array[$i] . "<br/>";
+                echo "array[$i] = " . $array[$i] . "<br/>";
                 $data->addPoints($this->getDataRow($array[$i]), $yLabels[$array[$i]]);
             }
         }
