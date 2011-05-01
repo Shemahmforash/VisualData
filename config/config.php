@@ -8,6 +8,7 @@ define("CHARTDEFAULT", 2);
 //os países q aparecem por defeito (os 3 primeiros da spreadsheet)
 $COUNTRIESDEFAULT = array(2,3,4);
 
+//os anos q aparecem por default (vazio significa q aparecem todos os anos q existam na spreadsheet)
 $YEARSDEFAULT = array();
 
 //an auxiliary array in order to pass the name of the yAxis of each spreadsheet to the graphics
