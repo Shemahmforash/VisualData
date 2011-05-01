@@ -23,7 +23,7 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
      * @param <String> $title the title of the graphic (optional, if null it will get the title from the spreadsheet)
      * @param <Int> $chartType the type of graphic (by default its 2, i.e., a line graph)
      */
-    public function createChart($file_name, $title="", $yAxisTitle="", $chartType=2, $YDataToUse=null) {
+    public function createChart($file_name, $title="", $yAxisTitle="", $chartType=2, $yDataToUse=null, $xDataToUse=null) {
 
         //gets the Y labels from the data
         $yAxis = $this->getYAxisLabels();
@@ -32,15 +32,18 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
         $MyData = new pData();
 
         //adds the Y Data
-        $this->filterYData($MyData, $yAxis, $YDataToUse);
+        $this->filterYData($MyData, $yAxis, $yDataToUse);
 
         //defines the yAxis title (if it isn't passed in the method it uses the name of the default data)
         if($yAxisTitle == "")
             $MyData->setAxisName(0, "Energy Consumption");
         else
             $MyData->setAxisName(0, $yAxisTitle);
-        
-        $MyData->addPoints($this->getXAxisLabels(), "Years");
+
+        //adds the X Data
+        //$MyData->addPoints($this->getXAxisLabels(), "Years");
+        $this->filterXData($MyData, $this->getXAxisLabels(), $xDataToUse);
+
         $MyData->setSerieDescription("Years", "Years");
         $MyData->setAbscissa("Years");
         //DEFINO O EIXO DOS XX COMO DATAS
@@ -106,15 +109,40 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
              * (Isto teve que ser feito por causa que a funcao quando recebe a
              * string da problemas de memoria)
              */
-            $array = array_map(
+            $filterDataInt = array_map(
                             create_function('$value', 'return (int)$value;'),
                             $filterData
             );
             //adds the chosen data to the graphic
-            for ($i = 0; $i < count($array); $i++) {
-                echo "array[$i] = " . $array[$i] . "<br/>";
-                $data->addPoints($this->getDataRow($array[$i]), $yLabels[$array[$i]]);
+            for ($i = 0; $i < count($filterDataInt); $i++) {
+                echo "array[$i] = " . $filterDataInt[$i] . "<br/>";
+                $data->addPoints($this->getDataRow($filterDataInt[$i]), $yLabels[$filterDataInt[$i]]);
             }
+        }
+    }
+
+    /**
+     * This function filters the data to use in the X axis (usually the years)
+     * @param <type> $data
+     * @param <type> $xLabels
+     * @param <type> $filterData
+     */
+    private function filterXData(&$data, $xLabels, $filterData=null) {
+        if (empty($filterData)) {
+            $data->addPoints($xLabels, "Years");
+        }
+        else {
+            /*
+             * Esta funcao serve para converter o array de strings para inteiros
+             * (Isto teve que ser feito por causa que a funcao quando recebe a
+             * string da problemas de memoria)
+             */
+            $filterDataInt = array_map(
+                            create_function('$value', 'return (int)$value;'),
+                            $filterData
+            );
+
+            $data->addPoints($filterDataInt, "Years");
         }
     }
 
