@@ -11,10 +11,10 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
     function __construct($key="") {
 
         error_reporting(E_ALL & ~E_NOTICE);
-        if($key == "")
-            parent::__construct('pyj6tScZqmEd1G8qI4GpZQg'); // the key of the default data
+        if ($key == "")
+            parent::__construct('pyj6tScZqmEd1G8qI4GpZQg');
         else
-            parent::__construct ($key);
+            parent::__construct($key);
     }
 
     /**
@@ -35,7 +35,7 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
         $this->filterYData($MyData, $yAxis, $yDataToUse);
 
         //defines the yAxis title (if it isn't passed in the method it uses the name of the default data)
-        if($yAxisTitle == "")
+        if ($yAxisTitle == "")
             $MyData->setAxisName(0, "Energy Consumption");
         else
             $MyData->setAxisName(0, $yAxisTitle);
@@ -85,6 +85,14 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
          */
         $this->getChart($myPicture, $chartType);
 
+        /* $myPicture->setGraphArea(500, 60, 670, 190);
+          $myPicture->drawFilledRectangle(480, 170, 650, 200, array("R" => 255, "G" => 255, "B" => 255, "Surrounding" => -200, "Alpha" => 10));
+          $myPicture->drawScale(array("XMargin" => 10, "YMargin" => 10, "Pos" => SCALE_POS_LEFTRIGHT, "DrawSubTicks" => TRUE));
+          $myPicture->setShadow(TRUE, array("X" => -1, "Y" => 1, "R" => 0, "G" => 0, "B" => 0, "Alpha" => 10));
+          $myPicture->drawLineChart();
+          $myPicture->setShadow(FALSE); */
+
+
         /* Write the chart legend */
         $myPicture->drawLegend(540, 20, array("Style" => LEGEND_NOBORDER, "Mode" => LEGEND_HORIZONTAL));
 
@@ -123,15 +131,14 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
 
     /**
      * This function filters the data to use in the X axis (usually the years)
-     * @param <type> $data
-     * @param <type> $xLabels
-     * @param <type> $filterData
+     * @param <type> $data a pData object (passed by reference)
+     * @param <type> $xLabels the complete labels of the xAxis contained in the spreadsheet
+     * @param <type> $filterData the xLabels to be used in the graphic
      */
     private function filterXData(&$data, $xLabels, $filterData=null) {
         if (empty($filterData)) {
             $data->addPoints($xLabels, "Years");
-        }
-        else {
+        } else {
             /*
              * Esta funcao serve para converter o array de strings para inteiros
              * (Isto teve que ser feito por causa que a funcao quando recebe a
