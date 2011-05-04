@@ -10,8 +10,8 @@ require_once("data_explorer.php");
 class DataBase_DataExplorer extends DataExplorer {
 
     private $HOST = "localhost";
-    private $DBUSER = "root";
-    private $DBPW = "forsakenart";
+    private $DBUSER = "MossUser";
+    private $DBPW = "6GWSKB4jLeDXTwnC";
     private $DBname = "MOSS";
     private $connection;
 
