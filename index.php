@@ -4,11 +4,6 @@ ini_set("display_errors", 1);
 
 require_once './config/config.php';
 
-foreach ($spreadSheets as $sprdsheetKey => $sprdsheetDescription) {
-
-    echo "key = $sprdsheetKey ; descrp: $sprdsheetDescription <br/>";
-}
-
 /**
  * defino qual é o tipo de fonte numa sessão, para quando redesenho o gráfico ele
  * ir buscar os dados ao sítio certo
@@ -22,7 +17,7 @@ if (empty($_POST)) {
 }
 
 //processamento dos POSTS para valores de sessão (se n houver posts, usa-se valores por defeito)
-if ($_POST['spreadSheet'] || $_POST['chart']) {
+if ($_POST['spreadSheet']/* || $_POST['chart'] */) {
     $_SESSION['spreadSheet'] = $_POST['spreadSheet'];
 } elseif (empty($_POST)) {
     $_SESSION['spreadSheet'] = SPREADSHEETDEFAULT;
@@ -51,6 +46,12 @@ if ($_POST['table']) {
 } elseif (empty($_POST)) {
     $_SESSION['table'] = $TABLEDEFAULT;
 }
+
+if ($_POST['average'] == 'on') {
+    $_SESSION['average'] = true;
+} else {
+    $_SESSION['average'] = false;
+}
 ?>
 
 
@@ -74,11 +75,11 @@ if ($_POST['table']) {
         $de->createChart("energyconsumption.png", "", "", 2);
     } else if ($_SESSION['tipoFonte'] == 'folhaCalculo') { /* folhas de cálculo */
         //echo "spread ou chart<br/>";
-        $de = new EnergyConsumptionDataExplorer($_SESSION['spreadSheet']);
+        $de = new EnergyConsumptionDataExplorer($_SESSION['spreadSheet'], $_SESSION['average']);
         $de->createChart("energyconsumption.png", "", $yAxisTitlePerSpreadSheet[$_SESSION['spreadSheet']],
                 $_SESSION['chart'], $_SESSION['countries'], $_SESSION['years']);
     } else if ($_SESSION['tipoFonte'] == 'dataBase') { /* base de dados */
-        $de = new DataBase_DataExplorer($_SESSION['table']);
+        $de = new DataBase_DataExplorer($_SESSION['table'], $_SESSION['average']);
         $de->createChartDB("energyconsumption.png", $tables[$_SESSION['table']], $_SESSION['table'],
                 $_SESSION['chart'], $_SESSION['countries'], $_SESSION['years']);
     }
@@ -166,19 +167,20 @@ if ($_POST['table']) {
 
                 <br/><!--<strong>FILTRAR:</strong>--><br/>
 
-                    <input type="checkbox" name="average"/>&nbsp;Desenhar m&eacute;dia<br/><br/>
+                    <input type="checkbox" name="average"  <? if ($_SESSION['average'] == true)
+                                    echo 'checked="checked"'; ?>/>&nbsp;Desenhar m&eacute;dia<br/><br/>
                     Escolha os pa&iacute;ses e os anos que deseja ver no gr&aacute;fico: <br />
                     <select name="countries[]" multiple="multiple" size=5>
-                        <?php foreach ($de->getYAxisLabels() as $id => $country): ?>
+<?php foreach ($de->getYAxisLabels() as $id => $country): ?>
                                     <option value="<?php echo $id ?>" <? if (in_array($id, $_SESSION['countries']))
                                         echo "selected='selected';" ?>><?php echo $country; ?></option>
-                                <?php endforeach; ?>
+<?php endforeach; ?>
                             </select>
                             &nbsp;&nbsp;
                             <select name="years[]" multiple="multiple" size=5>
-                        <?php foreach ($de->getXAxisLabels() as $id => $year): ?>
+<?php foreach ($de->getXAxisLabels() as $id => $year): ?>
                                             <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
-                        <?php endforeach; ?>
+<?php endforeach; ?>
                                         </select>
                                         <br/>
 

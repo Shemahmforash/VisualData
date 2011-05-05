@@ -18,14 +18,18 @@ class DataExplorer {
     private $key = null;
     private $spreadSheetService = null;
 
+    protected  $showAverage;
+
     /**
      *
      * @param <type> $spreadSheetKey
      */
-    function __construct($spreadSheetKey) {
+    function __construct($spreadSheetKey, $showAverage = false) {
         $this->key = $spreadSheetKey;
 
         $this->spreadSheetService = new Zend_Gdata_Spreadsheets(new Zend_Http_Client());
+
+        $this->showAverage = $showAverage;
     }
 
     /**

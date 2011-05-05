@@ -30,4 +30,6 @@ $tables = array("ExtremeTemperatureKilled" => "People Killed by Extreme Temperat
 
 $TABLEDEFAULT = "ExtremeTemperatureKilled";
 
+$SHOWAVERAGEDEFAULT = FALSE;
+
 ?>

@@ -32,7 +32,7 @@ class DataBase_DataExplorer extends DataExplorer {
      * Subclass constructor calls parent class
      * @param <String> $key The key of the spreadsheet
      */
-    public function __construct($tblName="") {
+    public function __construct($tblName="", $showAverage=false) {
 
         /* error_reporting(E_ALL & ~E_NOTICE);
           if ($key == "")
@@ -50,6 +50,9 @@ class DataBase_DataExplorer extends DataExplorer {
         $this->initiateDatabase();
         //puts the values from the table in attributes of this class
         $this->getAllDataFromTable();
+
+
+        $this->showAverage = $showAverage;
     }
 
     /**

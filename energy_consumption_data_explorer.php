@@ -8,13 +8,13 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
      * Subclass constructor calls parent class
      * @param <String> $key The key of the spreadsheet
      */
-    function __construct($key="") {
+    function __construct($key="", $showAverage=false) {
 
         error_reporting(E_ALL & ~E_NOTICE);
         if ($key == "")
-            parent::__construct('pyj6tScZqmEd1G8qI4GpZQg');
+            parent::__construct('pyj6tScZqmEd1G8qI4GpZQg', $showAverage);
         else
-            parent::__construct($key);
+            parent::__construct($key, $showAverage);
     }
 
     /**
@@ -111,12 +111,16 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
             $data->addPoints($this->getDataRow(2), $yLabels[2]);
             $data->addPoints($this->getDataRow(3), $yLabels[3]);
             //$data->addPoints($this->getDataRow(4), $yLabels[4]);
-            //médias
-            for ($i = 0; $i < count($this->getDataRow(2)); $i++) {
 
-                $data->addPoints($data->getSerieAverage($yLabels[2]), "Media {$yLabels[2]}");
-                $data->addPoints($data->getSerieAverage($yLabels[3]), "Media {$yLabels[3]}");
-                //$data->addPoints($data->getSerieAverage($yLabels[4]), "Media {$yLabels[4]}");
+
+            if ($this->showAverage) {
+                //médias
+                for ($i = 0; $i < count($this->getDataRow(2)); $i++) {
+
+                    $data->addPoints($data->getSerieAverage($yLabels[2]), "{$yLabels[2]} (Media)");
+                    $data->addPoints($data->getSerieAverage($yLabels[3]), "{$yLabels[3]} (Media)");
+                    //$data->addPoints($data->getSerieAverage($yLabels[4]), "Media {$yLabels[4]}");
+                }
             }
         } else {
             /*
@@ -132,10 +136,12 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
             for ($i = 0; $i < count($filterDataInt); $i++) {
                 echo "array[$i] = " . $filterDataInt[$i] . "<br/>";
                 $data->addPoints($this->getDataRow($filterDataInt[$i]), $yLabels[$filterDataInt[$i]]);
-                //médias
-                for ($k = 0; $k < count($this->getDataRow($filterDataInt[$i])); $k++) {
+                if ($this->showAverage) {
+                    //médias
+                    for ($k = 0; $k < count($this->getDataRow($filterDataInt[$i])); $k++) {
 
-                    $data->addPoints($data->getSerieAverage($yLabels[$filterDataInt[$i]]), "Media {$yLabels[$filterDataInt[$i]]}");
+                        $data->addPoints($data->getSerieAverage($yLabels[$filterDataInt[$i]]), "{$yLabels[$filterDataInt[$i]]} (Media)");
+                    }
                 }
             }
         }
