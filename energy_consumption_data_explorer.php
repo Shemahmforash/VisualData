@@ -1,6 +1,5 @@
 <?php
 
-ini_set("display_errors", 1);
 require_once("data_explorer.php");
 
 class EnergyConsumptionDataExplorer extends DataExplorer {

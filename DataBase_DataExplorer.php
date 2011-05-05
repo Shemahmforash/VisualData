@@ -152,7 +152,7 @@ class DataBase_DataExplorer extends DataExplorer {
     }
 
     /**
-     *
+     * Filters data to the Y axis, i.e., the countries to show
      * @param <type> $data
      * @param <type> $yLabels
      * @param <type> $filterData 
@@ -176,27 +176,16 @@ class DataBase_DataExplorer extends DataExplorer {
             //adds the chosen data to the graphic
             for ($i = 0; $i < count($filterDataInt); $i++) {
                 echo "array[$i] = " . $filterDataInt[$i] . " ; countriesValue = ".$this->countriesValues[$filterDataInt[$i]]."<br/>";
-
-                $bolas = $this->countriesValues[$filterDataInt[$i]];
-
+ 
+                //preciso de usar $yLabels[$filterDataInt[$i]], pois as keys do countryValues são mesmo países, e aquilo q vem no filtro são indices do array, desta forma converto indice para nome de país
                 $data->addPoints($this->countriesValues[$yLabels[$filterDataInt[$i]]], $yLabels[$filterDataInt[$i]]);
             }
-
             
         }
-
-        /* Build the query that will returns the data to graph */
-
-
-        /* Save the data in the pData array */
-        /*$data->addPoints($years, "Years");
-        $data->addPoints($India, "India");
-        $data->addPoints($Portugal, "Portugal");
-        $data->addPoints($Romania, "Romania");*/
     }
 
     /**
-     *
+     * Filters the data to the x axis (i.e., the years)
      * @param <type> $data
      * @param <type> $xLabels
      * @param <type> $filterData 
