@@ -113,7 +113,7 @@ if ($_POST['average'] == 'on') {
             <fieldset>
                 <legend>Folhas de C&aacute;lculo</legend>
                 <form name="chartSource" action="" method="POST">
-                    Escolha o tipo de Dados:&nbsp;
+                    Escolha a Folha de C&aacute;lculo:&nbsp;
                     <select name="spreadSheet">
                         <?
                         /*
@@ -147,7 +147,7 @@ if ($_POST['average'] == 'on') {
         <p>
             <form name="formChart" action="" method="POST">
                 <fieldset>
-                    <legend>Config Folhas de C&aacute;lculo</legend>
+                    <legend>Configurar Gr&aacute;fico</legend>
                     <?
                             /*
                              * AO MUDAR O TIPO DE GRÁFICO N DEVIA SER NECESSÁRIO RELER OS DADOS DO SERVER, POIS ISTO É APENAS "COSMÉTICA DO GRÁFICO"
@@ -194,6 +194,6 @@ if ($_POST['average'] == 'on') {
 
                             <img alt="<? $yAxisTitlePerSpreadSheet[$_SESSION['spreadSheet']] ?>" src="./pictures/energyconsumption.png" />
 
-        <h2>Rodap&eacute;</h2>
+        <? /*<h2>Rodap&eacute;</h2>*/?>
     </body>
 </html>
