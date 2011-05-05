@@ -1,16 +1,11 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of dataVisualizer
+ * An abstract class that defines a general class to explore and visualize data from several sources
  *
  * @author wanderer
  */
-abstract class dataVisualizer {
+abstract class DataVisualizer {
 
     protected $showAverage;
 

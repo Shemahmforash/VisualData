@@ -305,7 +305,7 @@ class DataBase_DataExplorer extends DataExplorer {
      * @param <type> $a
      * @return <type> 7
      */
-    function getAverage($a) {
+    private function getAverage($a) {
         return array_sum($a) / count($a);
     }
 
