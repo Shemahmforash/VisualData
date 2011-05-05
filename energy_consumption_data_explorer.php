@@ -110,13 +110,13 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
         if (empty($filterData)) {
             $data->addPoints($this->getDataRow(2), $yLabels[2]);
             $data->addPoints($this->getDataRow(3), $yLabels[3]);
-            $data->addPoints($this->getDataRow(4), $yLabels[4]);
+            //$data->addPoints($this->getDataRow(4), $yLabels[4]);
             //médias
             for ($i = 0; $i < count($this->getDataRow(2)); $i++) {
 
                 $data->addPoints($data->getSerieAverage($yLabels[2]), "Media {$yLabels[2]}");
                 $data->addPoints($data->getSerieAverage($yLabels[3]), "Media {$yLabels[3]}");
-                $data->addPoints($data->getSerieAverage($yLabels[4]), "Media {$yLabels[4]}");
+                //$data->addPoints($data->getSerieAverage($yLabels[4]), "Media {$yLabels[4]}");
             }
         } else {
             /*

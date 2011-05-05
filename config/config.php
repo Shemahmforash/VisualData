@@ -11,11 +11,19 @@ $COUNTRIESDEFAULT = array(2,3);
 //os anos q aparecem por default (vazio significa q aparecem todos os anos q existam na spreadsheet)
 $YEARSDEFAULT = array();
 
+$spreadSheets = array();
+$spreadSheets['pyj6tScZqmEd1G8qI4GpZQg'] = "Energy Consumption per Capita";
+$spreadSheets['pyj6tScZqmEfnPl7VRfT9WA'] = "Arms imports";
+//$spreadSheets['phAwcNAVuyj2ZMli4YTn2Ag'] = "Cell phones (per 100 people)";
+$spreadSheets['pyj6tScZqmEc8dxBU9o6rRQ'] = "Forest Area (Km²)";
+$spreadSheets['pyj6tScZqmEdrsBnj2ROXAg'] = "Adult literacy rate (%)";
+
 //an auxiliary array in order to pass the name of the yAxis of each spreadsheet to the graphics
 $yAxisTitlePerSpreadSheet = array();
 $yAxisTitlePerSpreadSheet['pyj6tScZqmEd1G8qI4GpZQg'] = "Energy Consumption";
 $yAxisTitlePerSpreadSheet['pyj6tScZqmEfnPl7VRfT9WA'] = "Arms";
-$yAxisTitlePerSpreadSheet['phAwcNAVuyj2ZMli4YTn2Ag'] = "Cell phones (per 100 people)";
+//$yAxisTitlePerSpreadSheet['phAwcNAVuyj2ZMli4YTn2Ag'] = "Cell phones (per 100 people)";
+$yAxisTitlePerSpreadSheet['pyj6tScZqmEc8dxBU9o6rRQ'] = "Forest Area (Km²)";
 $yAxisTitlePerSpreadSheet['pyj6tScZqmEdrsBnj2ROXAg'] = "Adult literacy rate (%)";
 
 $tables = array("ExtremeTemperatureKilled" => "People Killed by Extreme Temperature");
