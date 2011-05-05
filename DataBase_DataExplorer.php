@@ -16,8 +16,17 @@ class DataBase_DataExplorer extends DataExplorer {
     private $connection;
     private $tableName;
 
+    /**
+     *
+     * @var <type>
+     */
     private $years = array();
-    private $countries = array();
+
+    /**
+     *
+     * @var <type> 
+     */
+    private $countriesValues = array();
 
     /**
      * Subclass constructor calls parent class
@@ -37,8 +46,10 @@ class DataBase_DataExplorer extends DataExplorer {
             $this->tableName = $tblName;
         }
 
-
+        //does the connection to the db
         $this->initiateDatabase();
+        //puts the values from the table in attributes of this class
+        $this->getAllDataFromTable();
     }
 
     /**
@@ -58,14 +69,13 @@ class DataBase_DataExplorer extends DataExplorer {
      * @param <type> $yDataToUse
      * @param <type> $xDataToUse 
      */
-    public function createChartDB($file_name, $title="", $yAxisTitle="", $chartType=2, $yDataToUse=null, $xDataToUse=null) {
+    public function createChartDB($file_name, $title="", $yAxisTitle="", $chartType=2,
+                                    $yDataToUse=null, $xDataToUse=null) {
 
         /* Create the pData object */
         $myData = new pData();
 
         $this->filterYData($myData, $this->getYAxisLabels(), $yDataToUse);
-
-
 
         //defines the yAxis title (if it isn't passed in the method it uses the name of the default data)
         if ($yAxisTitle == "")
@@ -73,6 +83,12 @@ class DataBase_DataExplorer extends DataExplorer {
         else
             $myData->setAxisName(0, $yAxisTitle);
 
+        //adds the X Data
+        $this->filterXData($myData, $this->getXAxisLabels(), $xDataToUse);
+        /* Put the timestamp column on the abscissa axis */
+        $myData->setAbscissa("Years");
+        $myData->setSerieDescription("Years", "Years");
+        
         /*
           //gets the Y labels from the data
           $yAxis = $this->getYAxisLabels();
@@ -82,11 +98,7 @@ class DataBase_DataExplorer extends DataExplorer {
           //adds the X Data
           //$myData->addPoints($this->getXAxisLabels(), "Years");
           $this->filterXData($myData, $this->getXAxisLabels(), $xDataToUse);
-         */
-
-        /* Put the timestamp column on the abscissa axis */
-        $myData->setAbscissa("Years");
-        $myData->setSerieDescription("Years", "Years");
+         */        
 
         /* Create the pChart object */
         $myPicture = new pImage(900, 430, $myData);
@@ -148,9 +160,28 @@ class DataBase_DataExplorer extends DataExplorer {
     private function filterYData(&$data, $yLabels, $filterData=null) {
         
         if (empty($filterData)) {
-            $data->addPoints($this->countries[0], $yLabels[0]);
-            $data->addPoints($this->countries[1], $yLabels[1]);
+            $data->addPoints($this->countriesValues[0], $yLabels[0]);
+            $data->addPoints($this->countriesValues[1], $yLabels[1]);
         } else {
+            /*
+             * Esta funcao serve para converter o array de strings para inteiros
+             * (Isto teve que ser feito por causa que a funcao quando recebe a
+             * string da problemas de memoria)
+             */
+            $filterDataInt = array_map(
+                            create_function('$value', 'return (int)$value;'),
+                            $filterData
+            );
+
+            //adds the chosen data to the graphic
+            for ($i = 0; $i < count($filterDataInt); $i++) {
+                echo "array[$i] = " . $filterDataInt[$i] . " ; countriesValue = ".$this->countriesValues[$filterDataInt[$i]]."<br/>";
+
+                $bolas = $this->countriesValues[$filterDataInt[$i]];
+
+                $data->addPoints($this->countriesValues[$yLabels[$filterDataInt[$i]]], $yLabels[$filterDataInt[$i]]);
+            }
+
             
         }
 
@@ -158,10 +189,10 @@ class DataBase_DataExplorer extends DataExplorer {
 
 
         /* Save the data in the pData array */
-        $myData->addPoints($years, "Years");
-        $myData->addPoints($India, "India");
-        $myData->addPoints($Portugal, "Portugal");
-        $myData->addPoints($Romania, "Romania");
+        /*$data->addPoints($years, "Years");
+        $data->addPoints($India, "India");
+        $data->addPoints($Portugal, "Portugal");
+        $data->addPoints($Romania, "Romania");*/
     }
 
     /**
@@ -171,7 +202,21 @@ class DataBase_DataExplorer extends DataExplorer {
      * @param <type> $filterData 
      */
     private function filterXData(&$data, $xLabels, $filterData=null) {
-        
+        if(empty ($filterData)) {
+            $data->addPoints($this->getXAxisLabels(), "Years");
+        } else {
+            /*
+             * Esta funcao serve para converter o array de strings para inteiros
+             * (Isto teve que ser feito por causa que a funcao quando recebe a
+             * string da problemas de memoria)
+             */
+            $filterDataInt = array_map(
+                            create_function('$value', 'return (int)$value;'),
+                            $filterData
+            );
+
+            $data->addPoints($filterDataInt, "Years");
+        }
     }
 
     /**
@@ -241,7 +286,7 @@ class DataBase_DataExplorer extends DataExplorer {
             $years[] = $row["Years"];
 
             
-            foreach ($this->getXAxisLabels() as $country) {
+            foreach ($this->getYAxisLabels() as $country) {
                 $countries[$country][$i] = $row[$country];
             }
 
@@ -253,7 +298,7 @@ class DataBase_DataExplorer extends DataExplorer {
 
             $i++;
         }
-        $this->countries = $countries;
+        $this->countriesValues = $countries;
         $this->years = $years;
     }
 

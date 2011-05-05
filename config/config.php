@@ -5,8 +5,8 @@ define("SPREADSHEETDEFAULT", "pyj6tScZqmEd1G8qI4GpZQg");
 //o tipo de gráfico por defeito (line graph)
 define("CHARTDEFAULT", 2);
 
-//os países q aparecem por defeito (os 3 primeiros da spreadsheet)
-$COUNTRIESDEFAULT = array(2,3,4);
+//os países q aparecem por defeito (os 2 primeiros da spreadsheet)
+$COUNTRIESDEFAULT = array(2,3);
 
 //os anos q aparecem por default (vazio significa q aparecem todos os anos q existam na spreadsheet)
 $YEARSDEFAULT = array();
