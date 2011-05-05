@@ -1,5 +1,6 @@
 <?php
 
+ini_set("display_errors", 1);
 require_once("data_explorer.php");
 
 class EnergyConsumptionDataExplorer extends DataExplorer {
@@ -111,6 +112,13 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
             $data->addPoints($this->getDataRow(2), $yLabels[2]);
             $data->addPoints($this->getDataRow(3), $yLabels[3]);
             $data->addPoints($this->getDataRow(4), $yLabels[4]);
+            //médias
+            for ($i = 0; $i < count($this->getDataRow(2)); $i++) {
+
+                $data->addPoints($data->getSerieAverage($yLabels[2]), "Media {$yLabels[2]}");
+                $data->addPoints($data->getSerieAverage($yLabels[3]), "Media {$yLabels[3]}");
+                $data->addPoints($data->getSerieAverage($yLabels[4]), "Media {$yLabels[4]}");
+            }
         } else {
             /*
              * Esta funcao serve para converter o array de strings para inteiros
@@ -125,6 +133,11 @@ class EnergyConsumptionDataExplorer extends DataExplorer {
             for ($i = 0; $i < count($filterDataInt); $i++) {
                 echo "array[$i] = " . $filterDataInt[$i] . "<br/>";
                 $data->addPoints($this->getDataRow($filterDataInt[$i]), $yLabels[$filterDataInt[$i]]);
+                //médias
+                for ($k = 0; $k < count($this->getDataRow($filterDataInt[$i])); $k++) {
+
+                    $data->addPoints($data->getSerieAverage($yLabels[$filterDataInt[$i]]), "Media {$yLabels[$filterDataInt[$i]]}");
+                }
             }
         }
     }

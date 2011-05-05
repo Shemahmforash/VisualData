@@ -14,18 +14,29 @@ class DataBase_DataExplorer extends DataExplorer {
     private $DBPW = "6GWSKB4jLeDXTwnC";
     private $DBname = "MOSS";
     private $connection;
+    private $tableName;
+
+    private $years = array();
+    private $countries = array();
 
     /**
      * Subclass constructor calls parent class
      * @param <String> $key The key of the spreadsheet
      */
-    public function __construct($key="") {
+    public function __construct($tblName="") {
 
-        error_reporting(E_ALL & ~E_NOTICE);
-        if ($key == "")
-            parent::__construct('pyj6tScZqmEd1G8qI4GpZQg');
-        else
-            parent::__construct($key);
+        /* error_reporting(E_ALL & ~E_NOTICE);
+          if ($key == "")
+          parent::__construct('pyj6tScZqmEd1G8qI4GpZQg');
+          else
+          parent::__construct($key); */
+
+        if ($tblName == "") {
+            $this->tableName = "ExtremeTemperatureKilled";
+        } else {
+            $this->tableName = $tblName;
+        }
+
 
         $this->initiateDatabase();
     }
@@ -35,30 +46,26 @@ class DataBase_DataExplorer extends DataExplorer {
      */
     private function initiateDatabase() {
         $this->connection = mysql_connect($this->HOST, $this->DBUSER, $this->DBPW);
-        mysql_select_db($this->DBname, $this->connection);
+        mysql_select_db($this->DBname, $this->connection) or die("Couldn't select database");
     }
 
+    /**
+     *
+     * @param <type> $file_name
+     * @param <type> $title
+     * @param <type> $yAxisTitle
+     * @param <type> $chartType
+     * @param <type> $yDataToUse
+     * @param <type> $xDataToUse 
+     */
     public function createChartDB($file_name, $title="", $yAxisTitle="", $chartType=2, $yDataToUse=null, $xDataToUse=null) {
-        /* Build the query that will returns the data to graph */
-        $query = "SELECT * FROM ExtremeTemperatureKilled";
-        $result = mysql_query($query, $this->connection);
-        while ($row = mysql_fetch_array($result)) {
-            /* Push the results of the query in an array */
-            $years[] = $row["Years"];
-            $India[] = $row["India"];
-            $Portugal[] = $row["Portugal"];
-            $Romania[] = $row["Romania"];
-            $USA[] = $row["United States"];
-        }
 
         /* Create the pData object */
         $myData = new pData();
 
-        /* Save the data in the pData array */
-        $myData->addPoints($years, "Years");
-        $myData->addPoints($India, "India");
-        $myData->addPoints($Portugal, "Portugal");
-        $myData->addPoints($Romania, "Romania");
+        $this->filterYData($myData, $this->getYAxisLabels(), $yDataToUse);
+
+
 
         //defines the yAxis title (if it isn't passed in the method it uses the name of the default data)
         if ($yAxisTitle == "")
@@ -67,9 +74,9 @@ class DataBase_DataExplorer extends DataExplorer {
             $myData->setAxisName(0, $yAxisTitle);
 
         /*
-        //gets the Y labels from the data
-        $yAxis = $this->getYAxisLabels();
-        
+          //gets the Y labels from the data
+          $yAxis = $this->getYAxisLabels();
+
           //adds the Y Data
           $this->filterYData($myData, $yAxis, $yDataToUse);
           //adds the X Data
@@ -133,6 +140,41 @@ class DataBase_DataExplorer extends DataExplorer {
     }
 
     /**
+     *
+     * @param <type> $data
+     * @param <type> $yLabels
+     * @param <type> $filterData 
+     */
+    private function filterYData(&$data, $yLabels, $filterData=null) {
+        
+        if (empty($filterData)) {
+            $data->addPoints($this->countries[0], $yLabels[0]);
+            $data->addPoints($this->countries[1], $yLabels[1]);
+        } else {
+            
+        }
+
+        /* Build the query that will returns the data to graph */
+
+
+        /* Save the data in the pData array */
+        $myData->addPoints($years, "Years");
+        $myData->addPoints($India, "India");
+        $myData->addPoints($Portugal, "Portugal");
+        $myData->addPoints($Romania, "Romania");
+    }
+
+    /**
+     *
+     * @param <type> $data
+     * @param <type> $xLabels
+     * @param <type> $filterData 
+     */
+    private function filterXData(&$data, $xLabels, $filterData=null) {
+        
+    }
+
+    /**
      * Draws the chart by passing the object that draws and the type of chart
      * @param <pImage> $mypic
      * @param <integer> $chartType an integer that defines the type of chart (1->bar, 2->line, 3->plot)
@@ -151,6 +193,68 @@ class DataBase_DataExplorer extends DataExplorer {
         }
 
         return $gchart;
+    }
+
+    /**
+     * Gets the Years
+     * @return <type>
+     */
+    public function getXAxisLabels() {
+        $query = "SELECT DISTINCT(Years) FROM ExtremeTemperatureKilled";
+        $result = mysql_query($query) or die("Nao deu para executar o query " . $query . " pq " . mysql_error());
+
+        $xLabels = array();
+        while ($row = mysql_fetch_array($result)) {
+            $xLabels[] = $row['Years'];
+        }
+
+        return $xLabels;
+    }
+
+    /**
+     * Gets the names of the countries
+     * @return <type> 
+     */
+    public function getYAxisLabels() {
+        
+        $query = "SHOW COLUMNS FROM $this->tableName";
+        $result = mysql_query($query) or die("Nao deu para executar o query " . $query . " pq " . mysql_error());
+        $yLabels = array();
+        while ($row = mysql_fetch_array($result)) {
+            if ($row['Field'] != 'id' && $row['Field'] != 'Years')
+                $yLabels[] = $row['Field'];
+        }
+        return $yLabels;
+
+
+    }
+
+
+    private function  getAllDataFromTable() {
+        $query = "SELECT * FROM $this->tableName";
+        $result = mysql_query($query) or die("Nao deu para executar o query " . $query . " pq " . mysql_error());
+
+        $i = 0;
+        $countries = array();
+        while ($row = mysql_fetch_array($result)) {
+            /* Push the results of the query in an array */
+            $years[] = $row["Years"];
+
+            
+            foreach ($this->getXAxisLabels() as $country) {
+                $countries[$country][$i] = $row[$country];
+            }
+
+
+            /* $India[] = $row["India"];
+              $Portugal[] = $row["Portugal"];
+              $Romania[] = $row["Romania"];
+              $USA[] = $row["United States"]; */
+
+            $i++;
+        }
+        $this->countries = $countries;
+        $this->years = $years;
     }
 
 }

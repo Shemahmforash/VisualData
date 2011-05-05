@@ -20,4 +20,6 @@ $yAxisTitlePerSpreadSheet['pyj6tScZqmEdrsBnj2ROXAg'] = "Adult literacy rate (%)"
 
 $tables = array("ExtremeTemperatureKilled" => "People Killed by Extreme Temperature");
 
+$TABLEDEFAULT = "ExtremeTemperatureKilled";
+
 ?>

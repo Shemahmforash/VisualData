@@ -27,6 +27,13 @@ if ($_POST['years']) {
 } elseif (empty($_POST)) {
     $_SESSION['years'] = $YEARSDEFAULT;
 }
+
+if($_POST['table']) {
+    $_SESSION['table'] = $_POST['table'];
+} elseif (empty($_POST)) {
+    $_SESSION['table'] = $TABLEDEFAULT;
+}
+
 ?>
 
 
@@ -48,13 +55,14 @@ if ($_POST['years']) {
         $de = new EnergyConsumptionDataExplorer();
         $de->createChart("energyconsumption.png", "", "", 2);
     } else if ($_POST['spreadSheet'] || $_POST['chart']) {
-        echo "spread ou chart";
+        //echo "spread ou chart<br/>";
         $de = new EnergyConsumptionDataExplorer($_SESSION['spreadSheet']);
         $de->createChart("energyconsumption.png", "", $yAxisTitlePerSpreadSheet[$_SESSION['spreadSheet']],
                 $_SESSION['chart'], $_SESSION['countries'], $_SESSION['years']);
     } else if ($_POST['table']) {
-        $de = new DataBase_DataExplorer($_SESSION['spreadSheet']);
-        $de->createChartDB("energyconsumption.png", "Mortes por Temperatura Extrema", "Número de Mortos");
+        $de = new DataBase_DataExplorer($_SESSION['table']);
+        $de->createChartDB("energyconsumption.png", $tables[$_SESSION['table']], $_SESSION['table'],
+                $_SESSION['chart'], $_SESSION['countries'], $_SESSION['years']);
     }
     ?>
 <html>
