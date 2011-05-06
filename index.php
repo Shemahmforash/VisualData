@@ -5,8 +5,8 @@ ini_set("display_errors", 1);
 require_once './config/config.php';
 
 /**
- * defino qual é o tipo de fonte numa sessão, para quando redesenho o gráfico ele
- * ir buscar os dados ao sítio certo
+ * It defines which is the type of source in a session so it can pick the data
+ * from the right place when the graph is redrawn
  */
 if (empty($_POST)) {
     $_SESSION['tipoFonte'] = "folhaCalculo";
@@ -16,7 +16,7 @@ if (empty($_POST)) {
     $_SESSION['tipoFonte'] = "dataBase";
 }
 
-//processamento dos POSTS para valores de sessão (se n houver posts, usa-se valores por defeito)
+//the processment of post values into session values (when there are no posts, one uses the default values from config.php)
 if ($_POST['spreadSheet']/* || $_POST['chart'] */) {
     $_SESSION['spreadSheet'] = $_POST['spreadSheet'];
 } elseif (empty($_POST)) {
@@ -58,8 +58,11 @@ if ($_POST['average'] == 'on') {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <?php
-    require_once("energy_consumption_data_explorer.php");
-    require_once 'DataBase_DataExplorer.php';
+    //require_once("energy_consumption_data_explorer.php");
+    //require_once 'DataBase_DataExplorer.php';
+
+    require_once './class/DataVisualizerSpreadSheet.php';
+    require_once './class/DataVisualizerDataBase.php';
 
     echo "POST: <br/>";
     var_dump($_POST);
@@ -69,20 +72,31 @@ if ($_POST['average'] == 'on') {
     var_dump($_SESSION);
     echo "<br/><br/>";
 
-//por defeito é uma folha de cálculo
+    //By default one shows the Energy consumption spreadsheet
     if (empty($_POST)) {
-        $de = new EnergyConsumptionDataExplorer();
+        //$de = new EnergyConsumptionDataExplorer();
+        //$de->createChart("energyconsumption.png", "", "", 2);
+        $de = new DataVisualizerSpreadSheet();
         $de->createChart("energyconsumption.png", "", "", 2);
-    } else if ($_SESSION['tipoFonte'] == 'folhaCalculo') { /* folhas de cálculo */
+    } else if ($_SESSION['tipoFonte'] == 'folhaCalculo') { /* spreadsheets */
         //echo "spread ou chart<br/>";
-        $de = new EnergyConsumptionDataExplorer($_SESSION['spreadSheet'], $_SESSION['average']);
+        //$de = new EnergyConsumptionDataExplorer($_SESSION['spreadSheet'], $_SESSION['average']);
+        $de = new DataVisualizerSpreadSheet($_SESSION['average'], $_SESSION['spreadSheet']);
         $de->createChart("energyconsumption.png", "", $yAxisTitlePerSpreadSheet[$_SESSION['spreadSheet']],
                 $_SESSION['chart'], $_SESSION['countries'], $_SESSION['years']);
-    } else if ($_SESSION['tipoFonte'] == 'dataBase') { /* base de dados */
-        $de = new DataBase_DataExplorer($_SESSION['table'], $_SESSION['average']);
-        $de->createChartDB("energyconsumption.png", $tables[$_SESSION['table']], $_SESSION['table'],
+    } else if ($_SESSION['tipoFonte'] == 'dataBase') { /* Database */
+        //$de = new DataBase_DataExplorer($_SESSION['table'], $_SESSION['average']);
+        $de = new DataVisualizerDataBase($_SESSION['average'], $_SESSION['table']);
+        $de->createChart("energyconsumption.png", $tables[$_SESSION['table']], $_SESSION['table'],
                 $_SESSION['chart'], $_SESSION['countries'], $_SESSION['years']);
     }
+    /*
+      foreach ($de->getYAxisLabels() as $id => $country) {
+      echo "id = $id ; pais: $country<br/>";
+      }
+      foreach ($de->getXAxisLabels() as $id => $year) {
+      echo "id = $id; year = $year<br/>";
+      } */
     ?>
 <html>
     <body bgcolor="yellow">
@@ -148,11 +162,7 @@ if ($_POST['average'] == 'on') {
             <form name="formChart" action="" method="POST">
                 <fieldset>
                     <legend>Configurar Gr&aacute;fico</legend>
-                    <?
-                            /*
-                             * AO MUDAR O TIPO DE GRÁFICO N DEVIA SER NECESSÁRIO RELER OS DADOS DO SERVER, POIS ISTO É APENAS "COSMÉTICA DO GRÁFICO"
-                             */
-                    ?>
+
                             Escolha o tipo de gr&aacute;fico: &nbsp;
                             <select name="chart">
 
@@ -165,22 +175,22 @@ if ($_POST['average'] == 'on') {
                     </select>
 
 
-                <br/><!--<strong>FILTRAR:</strong>--><br/>
+                <br/><br/>
 
                     <input type="checkbox" name="average"  <? if ($_SESSION['average'] == true)
                                     echo 'checked="checked"'; ?>/>&nbsp;Desenhar m&eacute;dia<br/><br/>
-                    Escolha os pa&iacute;ses e os anos que deseja ver no gr&aacute;fico: <br />
-                    <select name="countries[]" multiple="multiple" size=5>
-<?php foreach ($de->getYAxisLabels() as $id => $country): ?>
+                         Escolha os pa&iacute;ses e os anos que deseja ver no gr&aacute;fico: <br />
+                         <select name="countries[]" multiple="multiple" size=5>
+                        <?php foreach ($de->getYAxisLabels() as $id => $country): ?>
                                     <option value="<?php echo $id ?>" <? if (in_array($id, $_SESSION['countries']))
                                         echo "selected='selected';" ?>><?php echo $country; ?></option>
-<?php endforeach; ?>
+                                <?php endforeach; ?>
                             </select>
                             &nbsp;&nbsp;
                             <select name="years[]" multiple="multiple" size=5>
-<?php foreach ($de->getXAxisLabels() as $id => $year): ?>
+                        <?php foreach ($de->getXAxisLabels() as $year): ?>
                                             <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
-<?php endforeach; ?>
+                        <?php endforeach; ?>
                                         </select>
                                         <br/>
 
@@ -194,6 +204,6 @@ if ($_POST['average'] == 'on') {
 
                             <img alt="<? $yAxisTitlePerSpreadSheet[$_SESSION['spreadSheet']] ?>" src="./pictures/energyconsumption.png" />
 
-        <? /*<h2>Rodap&eacute;</h2>*/?>
+        <? /* <h2>Rodap&eacute;</h2> */ ?>
     </body>
 </html>
