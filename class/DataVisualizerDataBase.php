@@ -16,12 +16,6 @@ class DataVisualizerDataBase extends DataVisualizer {
     private $DBname = "MOSS";
     private $connection;
     private $tableName;
-
-    /**
-     * An array containing the arrays
-     * @var <array[]>
-     */
-    private $years = array();
     
     /**
      * An array containing the values for each country
@@ -40,8 +34,9 @@ class DataVisualizerDataBase extends DataVisualizer {
 
         //does the connection to the db
         $this->initiateDatabase();
+
         //puts the values from the table in attributes of this class
-        $this->getAllDataFromTable();
+        $this->getAllDataFromTable($filterData);
     }
 
     /**
@@ -59,7 +54,11 @@ class DataVisualizerDataBase extends DataVisualizer {
      * @param <String[]> $filterData
      */
     protected function filterYData(&$data, $yLabels, $filterData = null) {
-       if (empty($filterData)) {
+
+        //refreshes the countriesValues, i.e., fills only the data corresponding to the selected years
+        $this->refreshCountriesValuesFromTable($filterData);
+
+        if (empty($filterData)) {
             $data->addPoints($this->countriesValues[0], $yLabels[0]);
             $data->addPoints($this->countriesValues[1], $yLabels[1]);
             if ($this->showAverage) {
@@ -83,7 +82,7 @@ class DataVisualizerDataBase extends DataVisualizer {
 
             //adds the chosen data to the graphic
             for ($i = 0; $i < count($filterDataInt); $i++) {
-                //echo "array[$i] = " . $filterDataInt[$i] . " ; countriesValue = " . $this->countriesValues[$filterDataInt[$i]] . "<br/>";
+                echo "array[$i] = " . $filterDataInt[$i] . " ; countriesValue = " . $this->countriesValues[$filterDataInt[$i]] . "<br/>";
 
                 //preciso de usar $yLabels[$filterDataInt[$i]], pois as keys do countryValues são mesmo países, e aquilo q vem no filtro são indices do array, desta forma converto indice para nome de país
                 $data->addPoints($this->countriesValues[$yLabels[$filterDataInt[$i]]], $yLabels[$filterDataInt[$i]]);
@@ -131,6 +130,7 @@ class DataVisualizerDataBase extends DataVisualizer {
      * Fills the attributes of the class from the data in the table chosen
      */
     private function getAllDataFromTable() {
+
         $query = "SELECT * FROM $this->tableName";
         $result = mysql_query($query) or die("Nao deu para executar o query " . $query . " pq " . mysql_error());
 
@@ -149,6 +149,43 @@ class DataVisualizerDataBase extends DataVisualizer {
         }
         $this->countriesValues = $countries;
         $this->years = $years;
+    }
+
+    private function refreshCountriesValuesFromTable($filter = null) {
+
+
+        $this->countriesValues = null;
+        if ($filter == null) {
+            $this->getAllDataFromTable();
+        } else {
+            $query = "SELECT * FROM $this->tableName";
+            $result = mysql_query($query) or die("Nao deu para executar o query " . $query . " pq " . mysql_error());
+
+            $i = 0;
+            $countries = array();
+            while ($row = mysql_fetch_array($result)) {
+                /* Push the results of the query in an array */
+                $years[] = $row["Years"];
+
+                //the years array has to be uptaded before this (by calling filterXData before filterYData
+                if(in_array($row["Years"], $this->years)) {
+                    foreach ($this->getYAxisLabels() as $country) {
+                        $countries[$country][$i] = $row[$country];
+                    }
+                }
+
+                /*foreach ($filter as $indexYear) {
+                    if ($this->years[$indexYear] == $row["Years"]) {
+                        foreach ($this->getYAxisLabels() as $country) {
+                            $countries[$country][$i] = $row[$country];
+                        }
+                    }
+                }*/
+                $i++;
+            }
+            $this->countriesValues = $countries;
+            echo "";
+        }
     }
 
     /**

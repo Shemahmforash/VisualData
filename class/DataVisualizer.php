@@ -21,6 +21,12 @@ abstract class DataVisualizer {
 
     protected $showAverage;
 
+    /**
+     * An array containing the arrays
+     * @var <array[]>
+     */
+    protected $years = array();
+
     function __construct($showAverage = false) {
         $this->showAverage = $showAverage;
     }
@@ -48,15 +54,6 @@ abstract class DataVisualizer {
         /* Create the pData object */
         $myData = new pData();
 
-        //adds the Y Data
-        $this->filterYData($myData, $this->getYAxisLabels(), $yDataToUse);
-
-        //defines the yAxis title (if it isn't passed in the method it uses the name of the default data)
-        if ($yAxisTitle == "")
-            $myData->setAxisName(0, "No. Killed by Extreme Temperatures");
-        else
-            $myData->setAxisName(0, $yAxisTitle);
-
         //adds the X Data
         $this->filterXData($myData, $this->getXAxisLabels(), $xDataToUse);
 
@@ -65,6 +62,15 @@ abstract class DataVisualizer {
         $myData->setAbscissa("Years");
         //DEFINO O EIXO DOS XX COMO DATAS
         //$myData->setXAxisDisplay(AXIS_FORMAT_DATE);
+
+        //adds the Y Data
+        $this->filterYData($myData, $this->getYAxisLabels(), $yDataToUse);
+
+        //defines the yAxis title (if it isn't passed in the method it uses the name of the default data)
+        if ($yAxisTitle == "")
+            $myData->setAxisName(0, "No. Killed by Extreme Temperatures");
+        else
+            $myData->setAxisName(0, $yAxisTitle);
 
         /* Create the pChart object */
         $myPicture = new pImage(900, 430, $myData);
@@ -138,6 +144,8 @@ abstract class DataVisualizer {
             );
 
             $data->addPoints($filterDataInt, "Years");
+
+            $this->years = $filterDataInt;
         }
     }
 

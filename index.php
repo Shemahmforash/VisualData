@@ -1,6 +1,6 @@
 <?php
 session_start();
-//ini_set("display_errors", 1);
+ini_set("display_errors", 1);
 
 require_once './config/config.php';
 
@@ -189,7 +189,8 @@ if ($_POST['average'] == 'on') {
                             &nbsp;&nbsp;
                             <select name="years[]" multiple="multiple" size=5>
                         <?php foreach ($de->getXAxisLabels() as $year): ?>
-                                            <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+                                            <option value="<?php echo $year; ?>" <? if (in_array($year, $_SESSION['years']))
+                                        echo "selected='selected';" ?>><?php echo $year; ?></option>
                         <?php endforeach; ?>
                                         </select>
                                         <br/>
