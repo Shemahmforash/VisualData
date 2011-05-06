@@ -1,3 +1,3 @@
 A program built in PHP that allows one to read, explore and visualize data from multiple sources.
-In the present it can read data from public spreadsheets and from a Database.
+In the present moment it can read data from public spreadsheets and from a Database.
 Besides that in can show de data read in a graphic (with several types of graphics available) and allows one to filter the data present in the graphics.
