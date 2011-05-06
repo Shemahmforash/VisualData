@@ -1,6 +1,6 @@
 <?php
 session_start();
-ini_set("display_errors", 1);
+//ini_set("display_errors", 1);
 
 require_once './config/config.php';
 
@@ -64,13 +64,13 @@ if ($_POST['average'] == 'on') {
     require_once './class/DataVisualizerSpreadSheet.php';
     require_once './class/DataVisualizerDataBase.php';
 
-    echo "POST: <br/>";
+    /*echo "POST: <br/>";
     var_dump($_POST);
     echo "<br/>";
 
     echo "SESSION:<br/>";
     var_dump($_SESSION);
-    echo "<br/><br/>";
+    echo "<br/><br/>";*/
 
     //By default one shows the Energy consumption spreadsheet
     if (empty($_POST)) {

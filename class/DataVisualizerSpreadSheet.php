@@ -76,7 +76,7 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
             );
             //adds the chosen data to the graphic
             for ($i = 0; $i < count($filterDataInt); $i++) {
-                echo "array[$i] = " . $filterDataInt[$i] . "<br/>";
+                //echo "array[$i] = " . $filterDataInt[$i] . "<br/>";
                 $data->addPoints($this->getDataRow($filterDataInt[$i]), $yLabels[$filterDataInt[$i]]);
                 if ($this->showAverage) {
                     //averages
