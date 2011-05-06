@@ -30,10 +30,12 @@ $yAxisTitlePerSpreadSheet['rSv5aMDwESiKg-yA__-tRFg'] = "People Killed";
 $yAxisTitlePerSpreadSheet['pyj6tScZqmEc8dxBU9o6rRQ'] = "Forest Area (Km²)";
 $yAxisTitlePerSpreadSheet['pyj6tScZqmEdrsBnj2ROXAg'] = "Adult literacy rate (%)";
 
-$tables = array("ExtremeTemperatureKilled" => "Killed by Extreme Temperature");
+$tables = array("ExtremeTemperatureKilled" => "Killed by Extreme Temperature", "TradeBalance" => "Trade Balance (US$)");
 
 $TABLEDEFAULT = "ExtremeTemperatureKilled";
 
 $SHOWAVERAGEDEFAULT = FALSE;
+
+$TIPOFONTEDEFAULT = "folhaCalculo";
 
 ?>

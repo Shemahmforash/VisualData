@@ -82,7 +82,7 @@ class DataVisualizerDataBase extends DataVisualizer {
 
             //adds the chosen data to the graphic
             for ($i = 0; $i < count($filterDataInt); $i++) {
-                echo "array[$i] = " . $filterDataInt[$i] . " ; countriesValue = " . $this->countriesValues[$filterDataInt[$i]] . "<br/>";
+                //echo "array[$i] = " . $filterDataInt[$i] . " ; countriesValue = " . $this->countriesValues[$filterDataInt[$i]] . "<br/>";
 
                 //preciso de usar $yLabels[$filterDataInt[$i]], pois as keys do countryValues são mesmo países, e aquilo q vem no filtro são indices do array, desta forma converto indice para nome de país
                 $data->addPoints($this->countriesValues[$yLabels[$filterDataInt[$i]]], $yLabels[$filterDataInt[$i]]);
@@ -100,7 +100,7 @@ class DataVisualizerDataBase extends DataVisualizer {
      * @return <type>
      */
     public function getXAxisLabels() {
-        $query = "SELECT DISTINCT(Years) FROM ExtremeTemperatureKilled";
+        $query = "SELECT DISTINCT(Years) FROM $this->tableName";
         $result = mysql_query($query) or die("Nao deu para executar o query " . $query . " pq " . mysql_error());
 
         $xLabels = array();
@@ -142,7 +142,7 @@ class DataVisualizerDataBase extends DataVisualizer {
 
 
             foreach ($this->getYAxisLabels() as $country) {
-                $countries[$country][$i] = $row[$country];
+                $countries[$country][$i] = abs($row[$country]);
             }
 
             $i++;
@@ -170,7 +170,7 @@ class DataVisualizerDataBase extends DataVisualizer {
                 //the years array has to be uptaded before this (by calling filterXData before filterYData
                 if(in_array($row["Years"], $this->years)) {
                     foreach ($this->getYAxisLabels() as $country) {
-                        $countries[$country][$i] = $row[$country];
+                        $countries[$country][$i] = abs($row[$country]);
                     }
                 }
 

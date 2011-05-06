@@ -1,6 +1,7 @@
 <?php
 session_start();
-ini_set("display_errors", 1);
+//ini_set("display_errors", 1);
+//error_reporting(E_ALL & ~E_NOTICE);
 
 require_once './config/config.php';
 
@@ -9,7 +10,7 @@ require_once './config/config.php';
  * from the right place when the graph is redrawn
  */
 if (empty($_POST)) {
-    $_SESSION['tipoFonte'] = "folhaCalculo";
+    $_SESSION['tipoFonte'] = $TIPOFONTEDEFAULT;
 } elseif ($_POST['spreadSheet']) {
     $_SESSION['tipoFonte'] = "folhaCalculo";
 } elseif ($_POST['table']) {
@@ -31,13 +32,13 @@ if ($_POST['chart']) {
 
 if ($_POST['countries']) {
     $_SESSION['countries'] = $_POST['countries'];
-} elseif (empty($_POST)) {
+} else/*if (empty($_POST))*/ {
     $_SESSION['countries'] = $COUNTRIESDEFAULT;
 }
 
 if ($_POST['years']) {
     $_SESSION['years'] = $_POST['years'];
-} elseif (empty($_POST)) {
+} else/*if (empty($_POST))*/ {
     $_SESSION['years'] = $YEARSDEFAULT;
 }
 
@@ -75,9 +76,12 @@ if ($_POST['average'] == 'on') {
     //By default one shows the Energy consumption spreadsheet
     if (empty($_POST)) {
         //$de = new EnergyConsumptionDataExplorer();
-        //$de->createChart("energyconsumption.png", "", "", 2);
         $de = new DataVisualizerSpreadSheet();
         $de->createChart("energyconsumption.png", "", "", 2);
+        //$de = new DataVisualizerSpreadSheet();
+        //$de = new DataVisualizerDataBase($_SESSION['average'], $_SESSION['table']);
+        //$de->createChart("energyconsumption.png", $tables[$_SESSION['table']], $_SESSION['table'],
+        //        $_SESSION['chart'], $_SESSION['countries'], $_SESSION['years']);
     } else if ($_SESSION['tipoFonte'] == 'folhaCalculo') { /* spreadsheets */
         //echo "spread ou chart<br/>";
         //$de = new EnergyConsumptionDataExplorer($_SESSION['spreadSheet'], $_SESSION['average']);
@@ -111,7 +115,7 @@ if ($_POST['average'] == 'on') {
                         <?
                         foreach ($tables as $tableName => $tableDescription) {
                         ?>
-                            <option value="<? echo $tableName; ?>"><? echo $tableDescription; ?></option>
+                            <option value="<? echo $tableName; ?>" <? if($_SESSION['table'] == $tableName) echo "selected=\"selected\"";?>><? echo $tableDescription; ?></option>
                         <?
                         }
                         ?>

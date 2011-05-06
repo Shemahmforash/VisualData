@@ -22,7 +22,7 @@ abstract class DataVisualizer {
     protected $showAverage;
 
     /**
-     * An array containing the arrays
+     * An array containing the years
      * @var <array[]>
      */
     protected $years = array();
@@ -130,8 +130,9 @@ abstract class DataVisualizer {
      * @param <String()> $filterData the xLabels to be used in the graphic
      */
     protected function filterXData(&$data, $xLabels, $filterData = null) {
-        if (empty($filterData)) {
+        if (count($filterData) == 0) {
             $data->addPoints($xLabels, "Years");
+            $this->years = $this->getXAxisLabels();
         } else {
             /*
              * Esta funcao serve para converter o array de strings para inteiros

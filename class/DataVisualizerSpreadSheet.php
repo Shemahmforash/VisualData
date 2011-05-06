@@ -21,6 +21,11 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
      */
     private $spreadSheetService = null;
 
+    /*
+     * An auxiliary variable to store the info of the all the labels of the x axis
+     */
+    private $xLabels;
+
     public function __construct($showAverage = false, $spreadSheetKey = 'pyj6tScZqmEd1G8qI4GpZQg') {
         //invokes the parent constructor to set the showAverage value
         parent::__construct($showAverage);
@@ -28,6 +33,8 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
         //sets the variables that referr to the spreadsheet
         $this->key = $spreadSheetKey;
         $this->spreadSheetService = new Zend_Gdata_Spreadsheets(new Zend_Http_Client());
+
+        $this->xLabels = $this->getXAxisLabels();
     }
 
     // The following functions assume the spreadsheet data is in the following format:
@@ -50,8 +57,8 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
      */
     protected function filterYData(&$data, $yLabels, $filterData = null) {
         if (empty($filterData)) {
-            $data->addPoints($this->getDataRow(2), $yLabels[2]);
-            $data->addPoints($this->getDataRow(3), $yLabels[3]);
+            $data->addPoints($this->getDataRow(2, true), $yLabels[2]);
+            $data->addPoints($this->getDataRow(3, true), $yLabels[3]);
             //$data->addPoints($this->getDataRow(4), $yLabels[4]);
 
 
@@ -77,7 +84,7 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
             //adds the chosen data to the graphic
             for ($i = 0; $i < count($filterDataInt); $i++) {
                 //echo "array[$i] = " . $filterDataInt[$i] . "<br/>";
-                $data->addPoints($this->getDataRow($filterDataInt[$i]), $yLabels[$filterDataInt[$i]]);
+                $data->addPoints($this->getDataRow($filterDataInt[$i], true), $yLabels[$filterDataInt[$i]]);
                 if ($this->showAverage) {
                     //averages
                     for ($k = 0; $k < count($this->getDataRow($filterDataInt[$i])); $k++) {
@@ -120,7 +127,8 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
      * @param <type> $maxRow
      * @return <type>
      */
-    private function _getSpreadSheetData($minCol=null, $maxCol=null, $minRow=null, $maxRow=null) {
+    private function _getSpreadSheetData($minCol=null, $maxCol=null, $minRow=null,
+            $maxRow=null, $isMeasurement=false) {
         $query = new Zend_Gdata_Spreadsheets_CellQuery();
         $query->setSpreadsheetKey($this->key);
 
@@ -144,7 +152,20 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
             $row = $cellEntry->cell->getRow();
             $col = $cellEntry->cell->getColumn();
             $val = $cellEntry->cell->getText();
-            $data[$row][$col] = $val;
+
+            //se for mesmo um valor e n uma legenda, só adiciono se estiver nos anos q me interessam
+            if($isMeasurement) {
+                //$xLabels = $this->getXAxisLabels();
+                if(in_array($this->xLabels[$col], $this->years)) {
+                    $data[$row][$col] = $val;
+                }
+            }
+            else {
+                $data[$row][$col] = $val;
+            }
+            //$data[$row][$col] = $val;
+
+            
         }
 
         return $data;
@@ -153,10 +174,11 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
     /**
      * Returns a data row from the spreadsheet
      * @param <type> $row_number
+     * @param <type> $value If it catches a real value or a legend
      * @return <type>
      */
-    public function getDataRow($row_number) {
-        $data = $this->_getSpreadSheetData(2, null, $row_number, $row_number);
+    public function getDataRow($row_number, $value=false) {
+        $data = $this->_getSpreadSheetData(2, null, $row_number, $row_number, $value);
         return $data[$row_number];
     }
 
