@@ -5,16 +5,44 @@ require_once("DataVisualizer.php");
 /**
  * A class that allows on to read, filter and visualize data from database tables.
  *
- * @author wanderer
  */
 class DataVisualizerDataBase extends DataVisualizer {
 
     //The variables to connect to the database
+    /**
+     * Database Host
+     * @var <string>
+     */
     private $HOST = "localhost";
+    
+    /**
+     * Database User (EDIT THIS VALUE TO SUIT YOUR SERVER)
+     * @var <string>
+     */
     private $DBUSER = "MossUser";
+
+    /**
+     * Database password (EDIT THIS VALUE TO SUIT YOUR SERVER)
+     * @var <string>
+     */
     private $DBPW = "6GWSKB4jLeDXTwnC";
+
+    /**
+     * Database name
+     * @var <String>
+     */
     private $DBname = "MOSS";
+
+    /**
+     * THe connection to the mysql database
+     * @var <type>
+     */
     private $connection;
+
+    /**
+     * The table name
+     * @var <String>
+     */
     private $tableName;
     
     /**
@@ -23,6 +51,11 @@ class DataVisualizerDataBase extends DataVisualizer {
      */
     private $countriesValues = array();
 
+    /**
+     * The constructor sets if the script shows the average and the table name
+     * @param <Bool> $showAverage
+     * @param <String> $tblName
+     */
     public function __construct($showAverage = false, $tblName="") {
         //invoes the parent constructor
         parent::__construct($showAverage);
@@ -97,7 +130,7 @@ class DataVisualizerDataBase extends DataVisualizer {
 
     /**
      * Gets the Years from the table
-     * @return <type>
+     * @return <String[]>
      */
     public function getXAxisLabels() {
         $query = "SELECT DISTINCT(Years) FROM $this->tableName";
@@ -113,7 +146,7 @@ class DataVisualizerDataBase extends DataVisualizer {
 
     /**
      * Gets the names of the countries
-     * @return <type>
+     * @return <String[]>
      */
     public function getYAxisLabels() {
         $query = "SHOW COLUMNS FROM $this->tableName";
@@ -151,8 +184,11 @@ class DataVisualizerDataBase extends DataVisualizer {
         $this->years = $years;
     }
 
+    /**
+     * Refresh the values to show in the graphic, now having in count the filter in the x axis.
+     * @param <String[]> $filter
+     */
     private function refreshCountriesValuesFromTable($filter = null) {
-
 
         $this->countriesValues = null;
         if ($filter == null) {
@@ -184,7 +220,6 @@ class DataVisualizerDataBase extends DataVisualizer {
                 $i++;
             }
             $this->countriesValues = $countries;
-            echo "";
         }
     }
 

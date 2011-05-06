@@ -1,0 +1,546 @@
+<html>
+<head>
+<title>Docs For Class DataVisualizer</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">default</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                              		  [ <a href="../classtrees_default.html" class="menu">class tree: default</a> ]
+		  [ <a href="../elementindex_default.html" class="menu">index: default</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+      <b>Packages:</b><br />
+              <a href="../li_default.html">default</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../default/_DataVisualizer.php.html">		DataVisualizer.php
+		</a><br>
+			<a href="../default/_DataVisualizerDataBase.php.html">		DataVisualizerDataBase.php
+		</a><br>
+			<a href="../default/_DataVisualizerSpreadSheet.php.html">		DataVisualizerSpreadSheet.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../default/DataVisualizer.html">DataVisualizer</a><br />
+	    		<a href="../default/DataVisualizerDataBase.html">DataVisualizerDataBase</a><br />
+	    		<a href="../default/DataVisualizerSpreadSheet.html">DataVisualizerSpreadSheet</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Class: DataVisualizer</h1>
+Source Location: /DataVisualizer.php<br /><br />
+
+
+<table width="100%" border="0">
+<tr><td valign="top">
+
+<h3><a href="#class_details">Class Overview</a></h3>
+<pre></pre><br />
+<div class="description">An abstract class that defines a general class to explore and visualize data from several sources</div><br /><br />
+<h4>Author(s):</h4>
+<ul>
+        </ul>
+
+
+
+
+    
+
+        
+</td>
+
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../default/DataVisualizer.html#var$showAverage">$showAverage</a></li>
+    <li><a href="../default/DataVisualizer.html#var$years">$years</a></li>
+  </ul>
+</td>
+
+
+<td valign="top">
+<h3><a href="#class_methods">Methods</a></h3>
+<ul>
+    <li><a href="../default/DataVisualizer.html#method__construct">__construct</a></li>
+    <li><a href="../default/DataVisualizer.html#methodcreateChart">createChart</a></li>
+    <li><a href="../default/DataVisualizer.html#methodfilterXData">filterXData</a></li>
+    <li><a href="../default/DataVisualizer.html#methodfilterYData">filterYData</a></li>
+    <li><a href="../default/DataVisualizer.html#methodgetChart">getChart</a></li>
+    <li><a href="../default/DataVisualizer.html#methodgetXAxisLabels">getXAxisLabels</a></li>
+    <li><a href="../default/DataVisualizer.html#methodgetYAxisLabels">getYAxisLabels</a></li>
+  </ul>
+</td>
+
+</tr></table>
+<hr />
+
+<table width="100%" border="0"><tr>
+
+
+<td valign="top">
+<h3>Child classes:</h3>
+<div class="tags">
+<dl>
+<dt><a href="../default/DataVisualizerDataBase.html">DataVisualizerDataBase</a></dt>
+	<dd>A class that allows on to read, filter and visualize data from database tables.</dd>
+</dl>
+<dl>
+<dt><a href="../default/DataVisualizerSpreadSheet.html">DataVisualizerSpreadSheet</a></dt>
+	<dd>A class that allows one to explore and visualize data from public spreadsheets</dd>
+</dl>
+</div>
+</td>
+
+
+
+
+</tr></table>
+<hr />
+
+<a name="class_details"></a>
+<h3>Class Details</h3>
+<div class="tags">
+[line 19]<br />
+An abstract class that defines a general class to explore and visualize data from several sources<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+</table>
+</div>
+</div><br /><br />
+<div class="top">[ <a href="#top">Top</a> ]</div><br />
+
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$showAverage"></a>
+	<p></p>
+	<h4>$showAverage = <span class="value"></span></h4>
+	<p>[line 25]</p>
+  Defines if the graph show the average or not<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td><Bool></td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$years"></a>
+	<p></p>
+	<h4>$years = <span class="value">array()</span></h4>
+	<p>[line 31]</p>
+  An array containing the years<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td><array[]></td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+<hr />
+<a name="class_methods"></a>
+<h3>Class Methods</h3>
+<div class="tags">
+
+  <hr />
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line 37]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>DataVisualizer __construct(
+[<Bool>
+$showAverage = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		The constructor sets to show or not the average<br /><br /><br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../default/DataVisualizerDataBase.html#method__construct">DataVisualizerDataBase::__construct()</a></dt>
+		<dd>The constructor sets if the script shows the average and the table name</dd>
+	</dl>
+		<dl>
+	<dt><a href="../default/DataVisualizerSpreadSheet.html#method__construct">DataVisualizerSpreadSheet::__construct()</a></dt>
+		<dd>When instantiating this class, it will set the variable to show or not the</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type"><Bool>&nbsp;&nbsp;</td>
+        <td><b>$showAverage</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodcreateChart"></a>
+	<h3>method createChart <span class="smalllinenumber">[line 59]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void createChart(
+<String>
+$file_name, [<String>
+$title = &quot;&quot;], [<String>
+$yAxisTitle = &quot;&quot;], [<Int>
+$chartType = 2], [<String()>
+$yDataToUse = null], [<String()>
+$xDataToUse = null])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Creates a graphic (png image) from the data and parameters chosen chosen<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type"><String>&nbsp;&nbsp;</td>
+        <td><b>$file_name</b>&nbsp;&nbsp;</td>
+        <td>the name of the file</td>
+      </tr>
+          <tr>
+        <td class="type"><String>&nbsp;&nbsp;</td>
+        <td><b>$title</b>&nbsp;&nbsp;</td>
+        <td>the title of the graphic (optional, if null it will get the title from the spreadsheet)</td>
+      </tr>
+          <tr>
+        <td class="type"><String>&nbsp;&nbsp;</td>
+        <td><b>$yAxisTitle</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type"><Int>&nbsp;&nbsp;</td>
+        <td><b>$chartType</b>&nbsp;&nbsp;</td>
+        <td>the type of graphic (by default its 2, i.e., a line graph)</td>
+      </tr>
+          <tr>
+        <td class="type"><String()>&nbsp;&nbsp;</td>
+        <td><b>$yDataToUse</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type"><String()>&nbsp;&nbsp;</td>
+        <td><b>$xDataToUse</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodfilterXData"></a>
+	<h3>method filterXData <span class="smalllinenumber">[line 139]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void filterXData(
+
+&$data, <String()>
+$xLabels, [<String()>
+$filterData = null], <pData()>
+$data)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		This function filters the data to use in the X axis (usually the years)<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type"><pData()>&nbsp;&nbsp;</td>
+        <td><b>$data</b>&nbsp;&nbsp;</td>
+        <td>a pData object (passed by reference)</td>
+      </tr>
+          <tr>
+        <td class="type"><String()>&nbsp;&nbsp;</td>
+        <td><b>$xLabels</b>&nbsp;&nbsp;</td>
+        <td>the complete labels of the xAxis contained in the spreadsheet</td>
+      </tr>
+          <tr>
+        <td class="type"><String()>&nbsp;&nbsp;</td>
+        <td><b>$filterData</b>&nbsp;&nbsp;</td>
+        <td>the xLabels to be used in the graphic</td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$data</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodfilterYData"></a>
+	<h3>method filterYData <span class="smalllinenumber">[line 48]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void filterYData(
+
+&$data, 
+$yLabels, [
+$filterData = null])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		<br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../default/DataVisualizerDataBase.html#methodfilterYData">DataVisualizerDataBase::filterYData()</a></dt>
+		<dd>Filters the Y axis data (in the energy case, these are the countries)</dd>
+	</dl>
+		<dl>
+	<dt><a href="../default/DataVisualizerSpreadSheet.html#methodfilterYData">DataVisualizerSpreadSheet::filterYData()</a></dt>
+		<dd>Filters the Y axis data (in the energy case, these are the countries)</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$data</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$yLabels</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$filterData</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetChart"></a>
+	<h3>method getChart <span class="smalllinenumber">[line 166]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code><type> getChart(
+<pImage>
+$mypic, <integer>
+$chartType)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Draws the chart by passing the object that draws and the type of chart<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type"><pImage>&nbsp;&nbsp;</td>
+        <td><b>$mypic</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type"><integer>&nbsp;&nbsp;</td>
+        <td><b>$chartType</b>&nbsp;&nbsp;</td>
+        <td>an integer that defines the type of chart (1-&gt;bar, 2-&gt;line, 3-&gt;plot)</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetXAxisLabels"></a>
+	<h3>method getXAxisLabels <span class="smalllinenumber">[line 44]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void getXAxisLabels(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Force Extending classes to define these methods<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../default/DataVisualizerDataBase.html#methodgetXAxisLabels">DataVisualizerDataBase::getXAxisLabels()</a></dt>
+		<dd>Gets the Years from the table</dd>
+	</dl>
+		<dl>
+	<dt><a href="../default/DataVisualizerSpreadSheet.html#methodgetXAxisLabels">DataVisualizerSpreadSheet::getXAxisLabels()</a></dt>
+		<dd>Gets the Years</dd>
+	</dl>
+	</p>
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetYAxisLabels"></a>
+	<h3>method getYAxisLabels <span class="smalllinenumber">[line 46]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void getYAxisLabels(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		<br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../default/DataVisualizerDataBase.html#methodgetYAxisLabels">DataVisualizerDataBase::getYAxisLabels()</a></dt>
+		<dd>Gets the names of the countries</dd>
+	</dl>
+		<dl>
+	<dt><a href="../default/DataVisualizerSpreadSheet.html#methodgetYAxisLabels">DataVisualizerSpreadSheet::getYAxisLabels()</a></dt>
+		<dd>Gets the names of the countries</dd>
+	</dl>
+	</p>
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+</div><br />
+
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Fri, 06 May 2011 22:33:39 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

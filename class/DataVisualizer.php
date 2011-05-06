@@ -15,10 +15,13 @@ include("pchart/class/pImage.class.php");
 /**
  * An abstract class that defines a general class to explore and visualize data from several sources
  *
- * @author wanderer
  */
 abstract class DataVisualizer {
 
+    /**
+     * Defines if the graph show the average or not
+     * @var <Bool>
+     */
     protected $showAverage;
 
     /**
@@ -27,6 +30,10 @@ abstract class DataVisualizer {
      */
     protected $years = array();
 
+    /**
+     * The constructor sets to show or not the average
+     * @param <Bool> $showAverage
+     */
     function __construct($showAverage = false) {
         $this->showAverage = $showAverage;
     }

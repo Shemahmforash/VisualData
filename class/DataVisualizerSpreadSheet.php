@@ -26,6 +26,12 @@ class DataVisualizerSpreadSheet extends DataVisualizer {
      */
     private $xLabels;
 
+    /**
+     * When instantiating this class, it will set the variable to show or not the
+     * average in the graph and the public spreadsheet key
+     * @param <Bool> $showAverage
+     * @param <String> $spreadSheetKey
+     */
     public function __construct($showAverage = false, $spreadSheetKey = 'pyj6tScZqmEd1G8qI4GpZQg') {
         //invokes the parent constructor to set the showAverage value
         parent::__construct($showAverage);

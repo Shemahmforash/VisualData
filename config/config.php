@@ -30,12 +30,15 @@ $yAxisTitlePerSpreadSheet['rSv5aMDwESiKg-yA__-tRFg'] = "People Killed";
 $yAxisTitlePerSpreadSheet['pyj6tScZqmEc8dxBU9o6rRQ'] = "Forest Area (Km²)";
 $yAxisTitlePerSpreadSheet['pyj6tScZqmEdrsBnj2ROXAg'] = "Adult literacy rate (%)";
 
+//the available tables from the database
 $tables = array("ExtremeTemperatureKilled" => "Killed by Extreme Temperature", "TradeBalance" => "Trade Balance (US$)");
 
+//the table that appears by default
 $TABLEDEFAULT = "ExtremeTemperatureKilled";
 
 $SHOWAVERAGEDEFAULT = FALSE;
 
+//by default one sees the spreadsheet data
 $TIPOFONTEDEFAULT = "folhaCalculo";
 
 ?>
